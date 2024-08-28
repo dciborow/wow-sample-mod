@@ -20,5 +20,5 @@ jobs:
 
     - name: Run tests
       run: |
-        luarocks install busted
+        luarocks install busted --local
         busted
