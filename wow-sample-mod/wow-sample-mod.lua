@@ -5,6 +5,9 @@ button:SetNormalTexture("Interface\\AddOns\\wow-sample-mod\\icon")
 button:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
 button:SetPoint("TOPLEFT", Minimap, "TOPLEFT")
 
+-- Set the global variable to the created button
+_G.MyMinimapButton = button
+
 -- Add an event handler for the button click event
 button:SetScript("OnClick", function(self, button, down)
     if button == "LeftButton" and down then
