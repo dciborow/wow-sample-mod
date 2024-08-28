@@ -13,16 +13,14 @@ jobs:
     - name: Set up Lua
       uses: leafo/gh-actions-lua@v8
 
-    - name: Install dependencies
+    - name: Install dependencies and set up environment
       run: |
         sudo apt-get update
         sudo apt-get install -y luarocks
 
-    - name: Add LuaRocks bin to PATH
-      run: echo "::add-path::$HOME/.luarocks/bin"
+        luarocks install busted --local
+        echo "$HOME/.luarocks/bin" >> $GITHUB_PATH
 
     - name: Run tests
-      run: |
-        luarocks install mediator_lua --local
-        luarocks install busted --local
-        busted
+      run: busted
+
