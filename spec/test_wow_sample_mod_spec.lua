@@ -16,14 +16,18 @@ _G.CreateFrame = function(frameType, frameName, parent, template)
             return self.scripts and self.scripts[scriptType] or nil
         end,
         CreateFontString = function() return { SetFontObject = function() end, SetPoint = function() end, SetText = function() end } end,
-        Show = function(self) self.isShown = true end,
-        IsShown = function(self) return self.isShown or false end,
     }
     return frame
 end
 
 _G.Minimap = {}
 _G.UIParent = {}
+
+-- Mock MySettingsFrame with IsShown and Show methods
+_G.MySettingsFrame = {
+    IsShown = function(self) return self.isShown or false end,
+    Show = function(self) self.isShown = true end,
+}
 
 -- Load the mod
 dofile("wow-sample-mod/wow-sample-mod.lua")
