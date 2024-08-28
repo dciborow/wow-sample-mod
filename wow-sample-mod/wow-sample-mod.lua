@@ -21,3 +21,15 @@ button:SetScript("OnClick", function(self, button, down)
         MySettingsFrame:Show()
     end
 end)
+
+function button:GetScript(scriptType)
+    return self.scripts and self.scripts[scriptType] or nil
+end
+
+function MySettingsFrame:IsShown()
+    return self.isShown or false
+end
+
+function MySettingsFrame:Show()
+    self.isShown = true
+end
