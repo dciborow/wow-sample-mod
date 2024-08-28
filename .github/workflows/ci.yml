@@ -20,5 +20,6 @@ jobs:
 
     - name: Run tests
       run: |
+        luarocks install mediator_lua --local
         luarocks install busted --local
         busted
