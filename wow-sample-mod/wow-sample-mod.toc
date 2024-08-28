@@ -1,0 +1,7 @@
+## Interface: 90005
+## Title: WoW Sample Mod
+## Notes: A sample mod for World of Warcraft
+## Author: Daniel Ciborowski
+## Version: 1.0.0
+
+wow-sample-mod.lua
