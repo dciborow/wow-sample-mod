@@ -19,12 +19,13 @@ jobs:
       uses: leafo/gh-actions-lua@v8
 
     - name: Install dependencies and set up environment
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y luarocks
+      uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: luarocks
+        version: 1.0
 
-        luarocks install busted --local
-        echo "$HOME/.luarocks/bin" >> $GITHUB_PATH
+    - name: Install Lua dependencies
+      run: luarocks install busted --local
 
     - name: Run tests
       run: busted
