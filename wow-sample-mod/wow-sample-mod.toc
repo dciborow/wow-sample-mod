@@ -2,6 +2,6 @@
 ## Title: WoW Sample Mod
 ## Notes: A sample mod for World of Warcraft
 ## Author: Daniel Ciborowski
-## Version: 1.0.0
+## Version: 1.0.1
 
 wow-sample-mod.lua
