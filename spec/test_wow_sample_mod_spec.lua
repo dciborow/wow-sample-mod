@@ -29,6 +29,18 @@ _G.MySettingsFrame = {
     Show = function(self) self.isShown = true end,
 }
 
+-- Mock DebugSettingsFrame with IsShown and Show methods
+_G.DebugSettingsFrame = {
+    IsShown = function(self) return self.isShown or false end,
+    Show = function(self) self.isShown = true end,
+}
+
+-- Mock AppInfoFrame with IsShown and Show methods
+_G.AppInfoFrame = {
+    IsShown = function(self) return self.isShown or false end,
+    Show = function(self) self.isShown = true end,
+}
+
 -- Load the mod
 dofile("wow-sample-mod/wow-sample-mod.lua")
 
@@ -46,5 +58,13 @@ describe("wow-sample-mod", function()
 
         assert.is_not_nil(_G.MySettingsFrame)
         assert.is_true(_G.MySettingsFrame:IsShown())
+    end)
+
+    it("should create a debugging settings frame", function()
+        assert.is_not_nil(_G.DebugSettingsFrame)
+    end)
+
+    it("should create an app information frame", function()
+        assert.is_not_nil(_G.AppInfoFrame)
     end)
 end)

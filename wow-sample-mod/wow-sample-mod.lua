@@ -36,3 +36,32 @@ end)
 function button:GetScript(scriptType)
     return self.scripts and self.scripts[scriptType] or nil
 end
+
+-- Add a new frame for "debugging" settings
+if not DebugSettingsFrame then
+    DebugSettingsFrame = CreateFrame("Frame", "DebugSettingsFrame", UIParent, "BasicFrameTemplateWithInset")
+    DebugSettingsFrame:SetSize(300, 200)
+    DebugSettingsFrame:SetPoint("CENTER")
+    DebugSettingsFrame.title = DebugSettingsFrame:CreateFontString(nil, "OVERLAY")
+    DebugSettingsFrame.title:SetFontObject("GameFontHighlight")
+    DebugSettingsFrame.title:SetPoint("LEFT", DebugSettingsFrame.TitleBg, "LEFT", 5, 0)
+    DebugSettingsFrame.title:SetText("Debugging settings")
+end
+
+-- Add a new frame for basic app information
+if not AppInfoFrame then
+    AppInfoFrame = CreateFrame("Frame", "AppInfoFrame", UIParent, "BasicFrameTemplateWithInset")
+    AppInfoFrame:SetSize(300, 200)
+    AppInfoFrame:SetPoint("CENTER")
+    AppInfoFrame.title = AppInfoFrame:CreateFontString(nil, "OVERLAY")
+    AppInfoFrame.title:SetFontObject("GameFontHighlight")
+    AppInfoFrame.title:SetPoint("LEFT", AppInfoFrame.TitleBg, "LEFT", 5, 0)
+    AppInfoFrame.title:SetText("App information")
+end
+
+-- Update the existing settings frame to follow Fluent 2 Design principles
+if MySettingsFrame then
+    if MySettingsFrame.title then
+        MySettingsFrame.title:SetText("Settings")
+    end
+end
