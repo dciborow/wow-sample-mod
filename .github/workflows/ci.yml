@@ -25,7 +25,9 @@ jobs:
         version: 1.0
 
     - name: Install Lua dependencies
-      run: luarocks install busted --local
+      run: |
+        luarocks install busted --local
+        echo "$HOME/.luarocks/bin" >> $GITHUB_PATH
 
     - name: Run tests
       run: busted
