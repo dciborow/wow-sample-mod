@@ -61,5 +61,7 @@ end
 
 -- Update the existing settings frame to follow Fluent 2 Design principles
 if MySettingsFrame then
-    MySettingsFrame.title:SetText("Settings")
+    if MySettingsFrame.title then
+        MySettingsFrame.title:SetText("Settings")
+    end
 end
