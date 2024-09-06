@@ -65,3 +65,51 @@ if MySettingsFrame then
         MySettingsFrame.title:SetText("Settings")
     end
 end
+
+-- Create a table to store dungeon completion times and DPS
+local dungeonData = {}
+
+-- Function to update dungeon completion times and DPS
+local function UpdateDungeonData(dungeonName, completionTime, dps)
+    if not dungeonData[dungeonName] then
+        dungeonData[dungeonName] = { fastestTime = completionTime, highestDPS = dps }
+    else
+        if completionTime < dungeonData[dungeonName].fastestTime then
+            dungeonData[dungeonName].fastestTime = completionTime
+        end
+        if dps > dungeonData[dungeonName].highestDPS then
+            dungeonData[dungeonName].highestDPS = dps
+        end
+    end
+end
+
+-- Event handler for dungeon completion
+local function OnDungeonCompleted(event, dungeonName, completionTime, dps)
+    UpdateDungeonData(dungeonName, completionTime, dps)
+end
+
+-- Register event for dungeon completion
+local eventFrame = CreateFrame("Frame")
+eventFrame:RegisterEvent("DUNGEON_COMPLETED")
+eventFrame:SetScript("OnEvent", OnDungeonCompleted)
+
+-- Display the fastest dungeon completion times and highest DPS in the settings frame
+local function DisplayDungeonData()
+    if MySettingsFrame then
+        local content = ""
+        for dungeonName, data in pairs(dungeonData) do
+            content = content .. string.format("Dungeon: %s\nFastest Time: %s\nHighest DPS: %s\n\n", dungeonName, data.fastestTime, data.highestDPS)
+        end
+        if not MySettingsFrame.content then
+            MySettingsFrame.content = MySettingsFrame:CreateFontString(nil, "OVERLAY")
+            MySettingsFrame.content:SetFontObject("GameFontHighlight")
+            MySettingsFrame.content:SetPoint("TOPLEFT", MySettingsFrame, "TOPLEFT", 10, -30)
+        end
+        MySettingsFrame.content:SetText(content)
+    end
+end
+
+-- Update the settings frame to include the new information
+if MySettingsFrame then
+    MySettingsFrame:SetScript("OnShow", DisplayDungeonData)
+end

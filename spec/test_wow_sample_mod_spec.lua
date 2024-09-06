@@ -41,6 +41,25 @@ _G.AppInfoFrame = {
     Show = function(self) self.isShown = true end,
 }
 
+-- Mock the necessary WoW API functions for dungeon completion times and DPS tracking
+_G.dungeonData = {}
+_G.UpdateDungeonData = function(dungeonName, completionTime, dps)
+    if not dungeonData[dungeonName] then
+        dungeonData[dungeonName] = { fastestTime = completionTime, highestDPS = dps }
+    else
+        if completionTime < dungeonData[dungeonName].fastestTime then
+            dungeonData[dungeonName].fastestTime = completionTime
+        end
+        if dps > dungeonData[dungeonName].highestDPS then
+            dungeonData[dungeonName].highestDPS = dps
+        end
+    end
+end
+
+_G.OnDungeonCompleted = function(event, dungeonName, completionTime, dps)
+    UpdateDungeonData(dungeonName, completionTime, dps)
+end
+
 -- Load the mod
 dofile("wow-sample-mod/wow-sample-mod.lua")
 
@@ -66,5 +85,26 @@ describe("wow-sample-mod", function()
 
     it("should create an app information frame", function()
         assert.is_not_nil(_G.AppInfoFrame)
+    end)
+
+    it("should track dungeon completion times and DPS", function()
+        OnDungeonCompleted("DUNGEON_COMPLETED", "Dungeon1", 300, 5000)
+        assert.is_not_nil(dungeonData["Dungeon1"])
+        assert.are.equal(300, dungeonData["Dungeon1"].fastestTime)
+        assert.are.equal(5000, dungeonData["Dungeon1"].highestDPS)
+    end)
+
+    it("should update dungeon completion times and DPS", function()
+        OnDungeonCompleted("DUNGEON_COMPLETED", "Dungeon1", 250, 6000)
+        assert.are.equal(250, dungeonData["Dungeon1"].fastestTime)
+        assert.are.equal(6000, dungeonData["Dungeon1"].highestDPS)
+    end)
+
+    it("should display dungeon data in the settings frame", function()
+        _G.MySettingsFrame:Show()
+        local content = _G.MySettingsFrame.content:GetText()
+        assert.is_true(content:find("Dungeon: Dungeon1"))
+        assert.is_true(content:find("Fastest Time: 250"))
+        assert.is_true(content:find("Highest DPS: 6000"))
     end)
 end)
