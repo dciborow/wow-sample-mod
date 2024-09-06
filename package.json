@@ -1,0 +1,16 @@
+{
+  "name": "wow-sample-mod",
+  "version": "1.0.0",
+  "description": "A sample mod for World of Warcraft",
+  "main": "wow-sample-mod.lua",
+  "scripts": {
+    "test": "busted",
+    "release": "standard-version"
+  },
+  "author": "Daniel Ciborowski",
+  "license": "MIT",
+  "devDependencies": {
+    "busted": "^2.0.0",
+    "standard-version": "^9.3.2"
+  }
+}
